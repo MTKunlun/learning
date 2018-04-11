@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    
+    <!-- 关闭所有服务的启动时检查：(没有提供者时报错)  写在定义服务消费者一方 -->  
+    <dubbo:consumer check="false" />
+    
+    <!-- 计算依赖关系 -->
+    <dubbo:application name="demotest-consumer" owner="programmer" organization="dubbox"/>
+    
+    <!--向 zookeeper 订阅 provider 的地址，由 zookeeper 定时推送-->
+    <dubbo:registry address="zookeeper://10.219.94.175:2181"/>
+    <!-- 本地开发模式，可以不配置zookeeper注册中心 -->
+    <!-- <dubbo:registry address="N/A"/> -->
+    
+    <!-- 生产环境模式，无需配置URL，会自动到zookeeper中寻找服务 -->
+    <!--使用 dubbo 协议调用定义好的 DemoProviderService 接口-->
+    <dubbo:reference id="demoService" version="1.0" interface="com.mtkunlun.dubbo.api.service.DemoProviderService"/>
+    <!--使用 dubbo 协议调用定义好的 DemoProviderAnnotationService 接口-->
+    <dubbo:reference id="demoAnnotationService" version="1.0" interface="com.mtkunlun.dubbo.api.annotation.service.DemoProviderAnnotationService"/>
+    
+    <!-- 开发模式配置，需要配置一个url -->
+    <!--使用 dubbo 协议调用定义好的 DemoProviderService 接口-->
+    <!-- <dubbo:reference id="demoService" version="1.0" interface="com.mtkunlun.dubbo.api.service.DemoProviderService" url="127.0.0.1:20881"/> -->
+    <!--使用 dubbo 协议调用定义好的 DemoProviderAnnotationService 接口-->
+    <!-- <dubbo:reference id="demoAnnotationService" version="1.0" interface="com.mtkunlun.dubbo.api.annotation.service.DemoProviderAnnotationService" url="127.0.0.1:20881"/> -->
+    
+    <!-- 分割线 -->
+    
+    <!-- 生产环境模式，无需配置URL，会自动到zookeeper中寻找服务 -->
+    <!--使用 dubbo 协议调用定义好的 DemoProviderService1 接口-->
+    <dubbo:reference id="demoService1"  version="2.0" interface="com.mtkunlun.dubbo.api.service.DemoProviderService" />
+    <!--使用 dubbo 协议调用定义好的 DemoProviderAnnotationService1 接口-->
+    <dubbo:reference id="demoAnnotationService1" version="2.0" interface="com.mtkunlun.dubbo.api.annotation.service.DemoProviderAnnotationService"/>
+    
+    <!-- 开发模式配置，需要配置一个url -->
+    <!--使用 dubbo 协议调用定义好的 DemoProviderService1 接口-->
+    <!-- <dubbo:reference id="demoService1"  version="2.0" interface="com.mtkunlun.dubbo.api.service.DemoProviderService" url="127.0.0.1:20880"/>-->
+    <!--使用 dubbo 协议调用定义好的 DemoProviderAnnotationService1 接口-->
+    <!-- <dubbo:reference id="demoAnnotationService1" version="2.0" interface="com.mtkunlun.dubbo.api.annotation.service.DemoProviderAnnotationService" url="127.0.0.1:20880"/> -->
+</beans>
